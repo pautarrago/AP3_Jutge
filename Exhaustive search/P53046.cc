@@ -30,5 +30,6 @@ int main()
 	vector<int> s(n, -1);
 	vector<bool> b(n, false);
 
+	if(n == 1) cout << "(1)" << endl;
 	gen(0, s, b, 0);
 }
