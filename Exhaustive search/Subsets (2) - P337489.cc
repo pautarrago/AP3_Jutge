@@ -1,40 +1,40 @@
 #include <iostream>
 #include <vector>
-#include <string>
 using namespace std;
 
-void gen(int k, vector<string>& s, vector<bool>& b, const vector<string>& v, int strt)
+int n;
+vector<string> v;
+
+void gen(int k, vector<string>& s, int m)
 {
-	if(k == int(s.size())){
-		if(k != 0){
-			cout << "{" << s[0];
-			for(int i = 1; i < int(s.size()); ++i){
-				cout << "," << s[i];
-			}
-			cout << "}" << endl;
+	if(int(s.size()) > m) return;
+	if(int(s.size()) +n -k < m) return;
+
+	if(k == n){
+		cout << "{";
+		for(int i = 0; i < m; ++i){
+			if(i != 0) cout << ",";
+			cout << s[i];
 		}
+		cout << "}" << endl;
 	}
 	else{
-		for(int i = strt; i < int(v.size()); ++i){
-			if(not b[i]){
-				b[i] = true;
-				s[k] = v[i];
-				gen(k+1, s, b, v, i);
-				b[i] = false;
-			}
-		}
+		s.push_back(v[k]);
+		gen(k+1, s, m);
+		s.pop_back();
+
+		gen(k+1, s, m);
 	}
 }
 
 int main()
 {
-	int n; cin >> n;
-	
 	int m; cin >> m;
-	vector<string> v(m);
-	for(int i = 0; i < m; ++i) cin >> v[i];
 
-	vector<bool> b(m, false);
-	vector<string> s(n);
-	gen(0, s, b, v, 0);
+	cin >> n;
+	v = vector<string> (n);
+	for (int i = 0; i < n; ++i) cin >> v[i];
+
+	vector<string> s;
+	gen(0, s, m);
 }
